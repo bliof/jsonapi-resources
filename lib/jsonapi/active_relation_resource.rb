@@ -338,6 +338,11 @@ module JSONAPI
             records = records.joins_left(relation_name)
           end
         end
+
+        if relationship.use_related_resource_records_for_joins
+          records = records.merge(self.records(options))
+        end
+
         records
       end
 
@@ -663,7 +668,7 @@ module JSONAPI
               end
             end
 
-            relation_position = relation_positions[row[2].downcase.pluralize]
+            relation_position = relation_positions[row[2].underscore.pluralize]
             model_fields = relation_position[:model_fields]
             cache_field = relation_position[:cache_field]
             cache_offset = relation_position[:cache_offset]
