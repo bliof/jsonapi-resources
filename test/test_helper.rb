@@ -62,7 +62,7 @@ class TestApp < Rails::Application
   config.active_support.halt_callback_chains_on_return_false = false
   config.active_record.time_zone_aware_types = [:time, :datetime]
   config.active_record.belongs_to_required_by_default = false
-  unless Rails::VERSION::MAJOR == 5 && Rails::VERSION::MINOR < 2 || Rails::VERSION::MAJOR == 6 && Rails::VERSION::MINOR >= 1
+  if Rails::VERSION::MAJOR == 5 && Rails::VERSION::MINOR == 2
     config.active_record.sqlite3.represent_boolean_as_integer = true
   end
 end
@@ -474,7 +474,7 @@ class ActionDispatch::IntegrationTest
   fixtures :all
 
   def assert_jsonapi_response(expected_status, msg = nil)
-    assert_equal JSONAPI::MEDIA_TYPE, response.content_type
+    assert_equal JSONAPI::MEDIA_TYPE, response.media_type
     if status != expected_status && status >= 400
       pp json_response rescue nil
     end
