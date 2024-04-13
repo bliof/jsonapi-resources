@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JSONAPI
   class Request
     attr_accessor :fields, :include, :filters, :sort_criteria, :errors, :controller_module_path,
@@ -32,7 +34,7 @@ module JSONAPI
       when 'index', 'show_related_resource', 'index_related_resources', 'show', 'show_relationship'
         false
       else
-        true
+        JSONAPI.configuration.allow_transactions
       end
     end
 
